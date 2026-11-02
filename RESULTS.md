@@ -37,7 +37,7 @@ taskset -c 0-15 llama-server -m gpt-oss-120b-MXFP4.gguf --jinja -c 65536 -ngl 99
   -np 1 -t 10 -tb 16 -b 2048 -ub 2048 -to 600
 ```
 
-Client: reasoning effort `medium`, max 40 steps, 8,192 max tokens per turn, server-default sampling, 600 s LLM timeout. Tool time limits were scaled by 176 / measured
+Client: reasoning effort `medium`, max 40 steps, 8,192 max tokens per turn, temperature 0, 600 s LLM timeout. Tool time limits were scaled by 176 / measured
 tok/s (about 2.5x) so the slower decode was not penalised.
 
 ## 2. Tough pack results (17 tests) vs the H100 reference
@@ -129,7 +129,7 @@ How they were derived (`emulation/estimate.py`):
 - Emulation pod: 1x RTX PRO 6000 Blackwell Workstation (RunPod Community Cloud), **$1.69/hr**, 7,445 s billed
   (2.07 h) = **about $3.50**. Availability probes added a few cents at most. The pod was terminated and the pod list was
   empty afterwards.
-- The earlier H100 NVL reference runs are documented in `results/h100_reference/H100_REPORT.md`.
+- The earlier H100 NVL reference runs are documented in [`h100-baseline/RESULTS_H100.md`](h100-baseline/RESULTS_H100.md).
 
 ## 7. Files
 
@@ -137,5 +137,5 @@ How they were derived (`emulation/estimate.py`):
 |---|---|
 | `results/minipc_emulation/guarded/`, `baseline/` | Scoresheets (`.md` and `.xlsx`) and run metadata |
 | `results/minipc_emulation/server_and_bench/` | `bench.json` (decode + long context), `final_config.json`, `stream.txt`, `pcie.txt`, `tune.jsonl`, `buffers.txt`, `samples.csv` (VRAM / RAM every 15 s), `ramcap.txt`, `expert_bytes.json`, `sysinfo.txt` |
-| `results/h100_reference/` | H100 report, scoresheets and comparison |
+| `h100-baseline/` | H100 NVL baseline report, scoresheets and comparison |
 | `emulation/`, `pod/`, `tough_pack/`, `original_pack/` | Everything needed to rerun; see `README.md` |

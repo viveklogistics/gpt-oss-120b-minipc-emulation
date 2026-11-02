@@ -1,4 +1,17 @@
-# Can gpt-oss-120b on llama.cpp do agentic ML / OR / Excel work? A cloud-GPU test report
+# H100 NVL baseline: can gpt-oss-120b on llama.cpp do agentic ML / OR / Excel work?
+
+*This is the full-GPU reference run. The later mini-PC emulation (64 GB DDR4 + USB4 eGPUs, same tests) is in
+[`../RESULTS.md`](../RESULTS.md). Raw scoresheets for this run are in
+[`original_pack_results/`](original_pack_results/) (5-test pack) and [`tough_pack_results/`](tough_pack_results/)
+(17-test pack, baseline and guarded). Raw model transcripts and pod logs are not published.*
+
+**Summary**
+
+| run | GPU | result | wall time | gen tok/s (median) | pod cost |
+|---|---|---|---|---|---|
+| Original pack T1-T5 | H100 NVL | **5 pass / 0 partial / 0 fail** | 3.5 min | 176.73 | ≈ $0.30 (ESTIMATE, see 4.5) |
+| Tough + Excel pack, baseline (17 tests) | H100 NVL | **8 / 4 / 5** | 21.5 min model time | 177.69 | ≈ $1.67-1.71 (2 pods) |
+| Tough + Excel pack, guarded (17 tests) | H100 NVL | **10 / 4 / 3** | 23.6 min model time | 175.90 | ≈ $1.13 (incl. one E4 rerun) |
 
 *Run date: 2 November 2026 (times in IST, UTC+5:30). All task data is **illustrative synthetic data** (a made-up product
 supply chain). It contains no real company data. Updated the same day with a **guarded rerun** of the tough pack and the
@@ -22,7 +35,7 @@ Speed on the mini PC is only **estimated** here; it was not measured.
 | Server | llama.cpp `llama-server` build **b12024-ddf48f85c**, prebuilt CUDA 12.8 binaries. Flags: `--jinja -c 32768 -ngl 99 -np 1` (guarded rerun: `-c 131072`) |
 | Context | Baseline: 32,768 tokens; the tough-pack harness trims old tool outputs once the context passes 20,000 tokens. Guarded rerun: 131,072 tokens, trimming only above 118,880 tokens (no test came near it) |
 | Reasoning | `reasoning_effort` = **medium**, temperature 0 |
-| Hardware | RunPod **NVIDIA H100 NVL** (Community Cloud, $2.59/hr). An A100 80GB was tried first but none was available |
+| Hardware | RunPod **NVIDIA H100 NVL**, 1 GPU (Community Cloud, $2.59/hr for the tough-pack pods). An A100 80GB was tried first but none was available, so every run here, including the 5-test pack, is on an H100 NVL |
 | Client | OpenAI Python client in streaming mode, run from a separate machine through the RunPod HTTP proxy |
 | Tools given to the model | `python_exec` (sandboxed; numpy, pandas, scipy, statsmodels, scikit-learn, lightgbm, xgboost, highspy, cvxpy, pulp, openpyxl), file read/list, `submit_answer` |
 
@@ -32,7 +45,8 @@ Three packs were run:
 
 * **Original pack (T1-T5):** 5 shorter tests.
   * T1 was a geo-lookup tool-calling task on public map data about a real site. It is **not** part of the public kit.
-  * T2-T5 used synthetic data.
+  * T2-T5 used synthetic data. Place names in the published T5/T3 outputs were renamed to the fictional names used in
+    the public kit's data generator (for example P1_Ashford, D1_Eastport); the numbers are unchanged.
 * **Tough pack (H1-H9):** a synthetic supply network with 6 plants, 2 intermediate units, 40 depots, 300 districts and
   36 months of history. It has planted data problems, a trap and a chained task.
 * **Excel round (E1-E8):** small synthetic sales and dispatch workbooks. The results are checked by **opening the saved
@@ -130,7 +144,9 @@ Pod 1 was cut short twice:
    of the same GPU type, with the same build and settings, re-ran H4-H9 and the Excel round.
 
 Every pod was terminated, and RunPod's pod list was confirmed empty afterwards. The original 5-test pack ran earlier
-the same day on another H100 NVL pod for about 7 minutes (13:30-13:37); its hourly price is not in our logs.
+the same day on another H100 NVL pod for about 7 minutes (13:30-13:37 IST); its hourly price is not in our logs.
+**ESTIMATE:** at the same $2.59/hr that is about **$0.30**. Across all H100 runs (5-test, baseline, guarded) the
+total was therefore roughly **$3.1** (estimate).
 
 ### 4.6 Guarded rerun (15:46-16:10 IST): same model, same tests, extra rules and tools
 
@@ -285,14 +301,15 @@ Pod time ≈ 26.1 min, so **≈ $1.13**. The local watchdog and the in-pod auto-
 
 ## 8. How to reproduce
 
-The public kit (`gptoss120b_agentic_test_kit.zip`) contains the data generators, tests, checkers, runners, a mock server and the RunPod scripts.
+Everything needed is in this repository (run from the repo root): data generators, tests, checkers, runners, a mock server and the RunPod scripts.
+T1 is not included; `original_pack` runs T2-T5.
 
 ```bash
 pip install -r requirements.txt          # plus LibreOffice for the Excel checks
 cd original_pack && python tests/gen_data.py && python tests/reference.py && python tests/selftest_checkers.py && cd ..
 cd tough_pack && python gen_data.py && python reference.py && python selftest_excel.py && cd ..
 # point at any OpenAI-compatible llama-server (llama-server --jinja -c 32768 -ngl 99 -m gpt-oss-120b-MXFP4.gguf)
-python original_pack/run_all.py --base-url http://HOST:8000/v1
+python original_pack/run_all.py --base-url http://HOST:8000/v1   # T2-T5
 python tough_pack/run_tough.py  --base-url http://HOST:8000/v1
 # or on RunPod (needs RUNPOD_API_KEY in the environment; always check `python pod/runpod_ctl.py list` afterwards)
 HOURS=0.8 BUDGET=3 bash pod/pod_pipeline.sh

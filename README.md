@@ -5,7 +5,7 @@ multi-step analytics work by writing and running its own Python: data cleaning, 
 loading, infeasibility handling, what-if analysis and everyday Excel tasks. It also contains a script that **emulates a
 consumer mini PC** (64 GB DDR4, i7-13620H class, two USB4 eGPUs with 22 GB + 12 GB) on one rented GPU.
 
-**Results: see [`RESULTS.md`](RESULTS.md).** The H100 reference report is in `results/h100_reference/H100_REPORT.md`.
+**Results: see [`RESULTS.md`](RESULTS.md).** **Full-GPU H100 NVL baseline (5-test pack 5/5, 17-test pack 8/4/5 baseline and 10/4/3 guarded, ~177 tok/s): see [`h100-baseline/RESULTS_H100.md`](h100-baseline/RESULTS_H100.md).**
 
 > **All data in this kit is ILLUSTRATIVE SYNTHETIC DATA** for a made-up supply chain, generated from fixed seeds.
 > It contains no real company, plant, depot or customer data.
@@ -24,7 +24,7 @@ consumer mini PC** (64 GB DDR4, i7-13620H class, two USB4 eGPUs with 22 GB + 12 
 | `emulation/` | `run_emulation.sh` (end-to-end RunPod emulation run), `estimate.py` (mini-PC speed estimates from the measured numbers) |
 | `pod/` | `runpod_ctl.py` (create / status / terminate / list RunPod pods via the REST API, with a local auto-terminate watchdog), `emulation_setup.sh` (runs on the pod: llama.cpp, GGUF download, STREAM, PCIe test, RAM balloon, VRAM tuning, benchmarks, llama-server), `pod_setup.sh` + `pod_pipeline.sh` (plain full-GPU run, as used for the H100 reference) |
 | `results/minipc_emulation/` | Guarded and baseline scoresheets (`.md`, `.xlsx`), run metadata, server config and benchmark files |
-| `results/h100_reference/` | H100 report, scoresheets and baseline-vs-guarded comparison |
+| `h100-baseline/` | H100 NVL baseline report (`RESULTS_H100.md`), 5-test and 17-test scoresheets, baseline-vs-guarded comparison |
 
 Raw model transcripts and server logs are not included.
 
