@@ -1,0 +1,15 @@
+# Python 3.10+ on the machine that runs the tests (your box/laptop; not needed on the pod)
+openai>=1.40
+requests
+numpy
+pandas
+scipy>=1.11
+statsmodels>=0.14
+scikit-learn
+lightgbm
+xgboost
+highspy
+cvxpy
+clarabel
+pulp==2.9.0        # pinned: pulp 3.x/4.x changed the classic LpVariable.dicts / cat= API the tests and models use
+openpyxl

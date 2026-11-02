@@ -1,0 +1,18 @@
+nproc=64
+Model name:                              AMD EPYC 9374F 32-Core Processor
+Thread(s) per core:                      2
+Core(s) per socket:                      32
+Socket(s):                               1
+CPU(s) scaling MHz:                      94%
+CPU max MHz:                             4306.0488
+CPU min MHz:                             1500.0000
+NUMA node(s):                            1
+               total        used        free      shared  buff/cache   available
+Mem:             912         252         278           0         388         660
+Swap:              0           0           0
+--cgroup
+226999996416
+1360000 100000
+index, name, memory.total [MiB], pcie.link.gen.current, pcie.link.gen.max, pcie.link.width.current, pcie.link.width.max
+0, NVIDIA RTX PRO 6000 Blackwell Workstation Edition, 97887 MiB, 1, 5, 16, 16
+ngpu=1 ts='' split=36 cap0=34304 cap1=999999

@@ -1,0 +1,5 @@
+threads=1 triad_GBps=43.2 copy_GBps=41.2
+threads=10 triad_GBps=151.3 copy_GBps=141.8
+threads=16 triad_GBps=146.7 copy_GBps=135.9
+threads=64 triad_GBps=59.8 copy_GBps=73.2
+pinned_0-15 threads=10 triad_GBps=75.3 copy_GBps=61.9

@@ -1,0 +1,1 @@
+gpu0 NVIDIA RTX PRO 6000 Blackwell Workstation Edition H2D_GBps=57.6

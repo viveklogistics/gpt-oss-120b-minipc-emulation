@@ -1,0 +1,79 @@
+{
+ "decode": [
+  {
+   "cache_n": 0,
+   "prompt_n": 82,
+   "prompt_ms": 2541.497,
+   "prompt_per_token_ms": 30.993865853658534,
+   "prompt_per_second": 32.26444886616038,
+   "predicted_n": 512,
+   "predicted_ms": 7269.421,
+   "predicted_per_token_ms": 14.225872798434443,
+   "predicted_per_second": 70.29445673871413
+  },
+  {
+   "cache_n": 0,
+   "prompt_n": 82,
+   "prompt_ms": 2435.161,
+   "prompt_per_token_ms": 29.69708536585366,
+   "prompt_per_second": 33.67333823102456,
+   "predicted_n": 512,
+   "predicted_ms": 7281.075,
+   "predicted_per_token_ms": 14.248679060665362,
+   "predicted_per_second": 70.181944287073
+  },
+  {
+   "cache_n": 0,
+   "prompt_n": 82,
+   "prompt_ms": 2445.635,
+   "prompt_per_token_ms": 29.824817073170735,
+   "prompt_per_second": 33.5291243378509,
+   "predicted_n": 512,
+   "predicted_ms": 7809.808,
+   "predicted_per_token_ms": 15.283381604696674,
+   "predicted_per_second": 65.43054579574812
+  }
+ ],
+ "long": [
+  {
+   "target": 8000,
+   "prompt_tokens": 7888,
+   "pp_tok_s": 1683.9394277082326,
+   "ttft_s": 4.684254,
+   "gen_tokens": 404,
+   "gen_tok_s": 68.45212920093095,
+   "wall_s": 10.6,
+   "truth_qty": 289,
+   "answer": "**Total\u202fSKU\u2011A07\u202fqty in\u202fNorth\u20113:**\u202f289  \n\n**Region with the most order lines:**\u202fNorth\u20115.",
+   "qty_correct": true
+  },
+  {
+   "target": 20000,
+   "prompt_tokens": 19916,
+   "pp_tok_s": 1927.680243571439,
+   "ttft_s": 10.331589,
+   "gen_tokens": 223,
+   "gen_tok_s": 64.79271729857564,
+   "wall_s": 13.9,
+   "truth_qty": 134,
+   "answer": "- Total\u202fSKU\u2011A07 quantity in **North\u20113**:\u202f**134**  \n- Region with the most order lines: **North\u20115**.",
+   "qty_correct": true
+  },
+  {
+   "target": 30000,
+   "prompt_tokens": 29898,
+   "pp_tok_s": 2035.915821302184,
+   "ttft_s": 14.685283,
+   "gen_tokens": 851,
+   "gen_tok_s": 63.57379885908217,
+   "wall_s": 28.4,
+   "truth_qty": 822,
+   "answer": "**Total\u202fSKU\u2011A07 quantity in\u202fNorth\u20113:**\u202f0  \n\n**Region with the most order lines:**\u202fSouth\u20115.",
+   "qty_correct": false
+  }
+ ],
+ "mem_mib_after": [
+  33268
+ ],
+ "decode_median_tok_s": 70.181944287073
+}
